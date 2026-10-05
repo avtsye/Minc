@@ -68,13 +68,15 @@ if ((await target.getAttribute("data-type")) !== "soil") throw new Error("Redo f
 await page.getByRole("button", { name: "Axe", exact: true }).click();
 const wood = page.locator('.cell[data-type="wood"]').first();
 if (await wood.count()) {
+  const woodIndex = await wood.getAttribute("data-index");
   await wood.scrollIntoViewIfNeeded();
   await wood.hover();
   await page.mouse.down();
   await page.waitForTimeout(220);
   await page.mouse.up();
   await page.waitForTimeout(80);
-  if ((await wood.getAttribute("data-type")) !== "sky") throw new Error("Mining failed");
+  const minedCell = page.locator('.cell[data-index="' + woodIndex + '"]');
+  if ((await minedCell.getAttribute("data-type")) !== "sky") throw new Error("Mining failed");
 }
 
 // Save + reload + continue.
