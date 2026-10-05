@@ -52,16 +52,16 @@ await page.keyboard.press("Escape");
 
 // Place a block near starting area and undo/redo.
 await page.keyboard.press("1");
-const target=page.locator('.cell[data-index="390"]');
+const target=page.locator('.cell[data-type="sky"]').first();
+const targetIndex=await target.getAttribute("data-index");
 await target.scrollIntoViewIfNeeded();
-const oldType=await target.getAttribute("data-type");
-if(oldType!=="sky")throw new Error("QA placement target unexpectedly occupied");
 await target.click();
-if((await target.getAttribute("data-type"))!=="soil")throw new Error("Placement failed");
+const stableTarget=page.locator('.cell[data-index="' + targetIndex + '"]');
+if((await stableTarget.getAttribute("data-type"))!=="soil")throw new Error("Placement failed");
 await page.keyboard.press("Control+z");
-if((await target.getAttribute("data-type"))!=="sky")throw new Error("Undo failed");
+if((await stableTarget.getAttribute("data-type"))!=="sky")throw new Error("Undo failed");
 await page.keyboard.press("Control+y");
-if((await target.getAttribute("data-type"))!=="soil")throw new Error("Redo failed");
+if((await stableTarget.getAttribute("data-type"))!=="soil")throw new Error("Redo failed");
 
 // Stats and save.
 await page.click("#statsBtn");await page.locator("#statsModal").waitFor({state:"visible"});
