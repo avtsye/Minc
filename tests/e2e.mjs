@@ -65,7 +65,7 @@ await page.keyboard.press("Control+y");
 if ((await target.getAttribute("data-type")) !== "soil") throw new Error("Redo failed");
 
 // Mine a block in creative mode.
-await page.locator(".tool-card").filter({ hasText: "Axe" }).click();
+await page.getByRole("button", { name: "Axe", exact: true }).click();
 const wood = page.locator('.cell[data-type="wood"]').first();
 if (await wood.count()) {
   const box = await wood.boundingBox();
