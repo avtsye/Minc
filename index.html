@@ -1,83 +1,270 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/assets/images/ironPickaxeTexture.png">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/tools.css">
-    <link rel="stylesheet" href="/css/items.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="/css/start.css">
-    <title>MineCraft2D | Elad</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#16210f" />
+  <link rel="icon" href="./assets/images/ironPickaxeTexture.png" />
+  <link rel="stylesheet" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <title>Mincraft 2D Enhanced</title>
 </head>
-
 <body>
-    <section class="game-start-scene">
-        <div class="tutorial">
-            <div class="tutorial-line">
-                <div class="star-icon"></div>
-                <p> You need to pick a tool</p>
-            </div>
-            <div class="tutorial-line">
-                <div class="star-icon"></div>
-                <p> Use the tool to take off a tile from the screen</p>
-            </div>
-            <div class="tutorial-line">
-                <div class="star-icon"></div>
-                <p> You can place the tile back wherever you want</p>
-            </div>
+  <div id="app">
+    <section id="startScreen" class="screen start-screen">
+      <div class="start-card">
+        <div class="brand">
+          <img src="./assets/images/Minecraft-Logo-2013-2021.png" alt="Minecraft 2D" />
+          <p>גרסת 2D משודרגת – בנייה, כרייה, יצירה ושמירה מקומית</p>
         </div>
-        <div class="logo"></div>
 
-
-        <div class="start-btn">
-            <a class="cta" href="#">
-                <span>Start Game</span>
-                <span>
-                    <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <path class="one"
-                                d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
-                                fill="#FFFFFF"></path>
-                            <path class="two"
-                                d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
-                                fill="#FFFFFF"></path>
-                            <path class="three"
-                                d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
-                                fill="#FFFFFF"></path>
-                        </g>
-                    </svg>
-                </span>
-            </a>
+        <div class="start-actions">
+          <button id="continueBtn" class="mc-btn primary">המשך משחק</button>
+          <button id="newGameBtn" class="mc-btn">משחק חדש</button>
+          <button id="helpBtnStart" class="mc-btn">הוראות מפורטות</button>
+          <button id="settingsBtnStart" class="mc-btn">הגדרות</button>
         </div>
+
+        <div class="new-game-options">
+          <label>Seed לעולם
+            <input id="seedInput" type="text" maxlength="40" placeholder="ריק = Seed אקראי" />
+          </label>
+          <label>מצב משחק
+            <select id="modeSelect">
+              <option value="survival">Survival</option>
+              <option value="creative">Creative</option>
+            </select>
+          </label>
+        </div>
+        <div class="start-tip">טיפ: אפשר לפתוח את ההוראות בכל רגע עם <kbd>H</kbd>.</div>
+      </div>
     </section>
 
-
-    <main class="game-scene display-none">
-        <header class="option-bar">
-            <button class="upgrade">
-                <div class="tool-upgrade-background"></div>
-            </button>
-            <div class="tools"></div>
-            <div class="inventory-window-position">
-                <div class="inventory opacity-zero"></div>
-            </div>
-            <div class="inventory-window">
-            </div>
-            <div class="reset-game-btn">
-                <div class="reset-text"><span>Reset</span></div>
-                <button class="reset-game-btn-anim"></button>
-            </div>
-        </header>
-        <div id="world" class="game-container">
-
+    <main id="gameScreen" class="game-screen hidden" aria-label="Minecraft 2D">
+      <header class="topbar">
+        <div class="topbar-group">
+          <button id="pauseBtn" class="icon-btn" title="השהיה">⏸</button>
+          <button id="helpBtn" class="icon-btn" title="הוראות">?</button>
+          <button id="saveBtn" class="icon-btn" title="שמירה">💾</button>
+          <button id="undoBtn" class="icon-btn" title="Undo">↶</button>
+          <button id="redoBtn" class="icon-btn" title="Redo">↷</button>
         </div>
-    </main>
-    <script type="module" src="/scripts/main.js"></script>
-</body>
+        <div class="status-strip">
+          <span>מצב: <strong id="modeLabel">Survival</strong></span>
+          <span>Seed: <strong id="seedLabel">-</strong></span>
+          <span>כלי: <strong id="toolLabel">Shovel</strong></span>
+          <span>Tier: <strong id="tierLabel">1</strong></span>
+          <span>XP: <strong id="xpLabel">0/10</strong></span>
+          <span id="saveStatus">לא נשמר</span>
+        </div>
+        <div class="topbar-group">
+          <button id="inventoryBtn" class="icon-btn" title="מלאי">🎒</button>
+          <button id="craftBtn" class="icon-btn" title="Crafting">🧰</button>
+          <button id="settingsBtn" class="icon-btn" title="הגדרות">⚙</button>
+        </div>
+      </header>
 
+      <section class="workspace">
+        <aside class="sidebar">
+          <h2>כלים</h2>
+          <div id="toolsPanel" class="tools-panel"></div>
+
+          <div class="upgrade-box">
+            <div class="upgrade-head">
+              <span>שדרוג כלים</span>
+              <strong id="upgradeProgressText">0/10</strong>
+            </div>
+            <div class="progress"><div id="upgradeProgress"></div></div>
+            <button id="upgradeBtn" class="mc-btn compact" disabled>שדרג</button>
+          </div>
+
+          <div class="block-inspector">
+            <h2>הבלוק המסומן</h2>
+            <div id="blockInfo">העבר את העכבר מעל בלוק</div>
+          </div>
+
+          <div class="mini-wrap">
+            <h2>מפה</h2>
+            <canvas id="minimap" width="180" height="90"></canvas>
+          </div>
+        </aside>
+
+        <section class="world-shell">
+          <div id="dayOverlay" class="day-overlay"></div>
+          <div id="worldViewport" class="world-viewport" tabindex="0">
+            <div id="world" class="world"></div>
+          </div>
+          <div id="miningHud" class="mining-hud hidden">
+            <span id="miningLabel">Mining...</span>
+            <div class="progress"><div id="miningProgress"></div></div>
+          </div>
+          <div id="toast" class="toast hidden"></div>
+        </section>
+      </section>
+
+      <footer class="hotbar-shell">
+        <div id="hotbar" class="hotbar"></div>
+        <div class="hotbar-help">1–9 לבחירת פריט · E מלאי · C יצירה · H הוראות · P השהיה · Ctrl+Z/Y Undo/Redo</div>
+      </footer>
+    </main>
+
+    <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+
+    <section id="helpModal" class="modal large hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="modal-head">
+        <h1 id="helpTitle">מדריך מלא – Mincraft 2D Enhanced</h1>
+        <button class="modal-close" data-close="helpModal">×</button>
+      </div>
+      <div class="modal-body help-content">
+        <nav class="help-nav">
+          <a href="#help-start">התחלה</a>
+          <a href="#help-tools">כלים</a>
+          <a href="#help-mining">כרייה</a>
+          <a href="#help-place">הנחת בלוקים</a>
+          <a href="#help-inventory">מלאי ו-Hotbar</a>
+          <a href="#help-craft">Crafting</a>
+          <a href="#help-upgrade">שדרוגים</a>
+          <a href="#help-modes">מצבי משחק</a>
+          <a href="#help-world">עולם ו-Seed</a>
+          <a href="#help-save">שמירה</a>
+          <a href="#help-shortcuts">קיצורים</a>
+          <a href="#help-troubleshoot">פתרון בעיות</a>
+        </nav>
+
+        <article id="help-start">
+          <h2>1. התחלה מהירה</h2>
+          <p>בחר “משחק חדש”, הזן Seed אם אתה רוצה עולם שניתן לשחזר, ובחר Survival או Creative. לאחר הכניסה לעולם בחר כלי בצד שמאל, לחץ על בלוקים כדי לכרות אותם, ובחר בלוק מה-Hotbar או מהמלאי כדי להניח אותו במקום פנוי.</p>
+          <p>ב-Survival צריך להשתמש בכלי המתאים וב-Tier המתאים. ב-Creative אפשר לשבור ולהניח כמעט כל בלוק ללא מגבלת מלאי.</p>
+        </article>
+
+        <article id="help-tools">
+          <h2>2. הכלים</h2>
+          <ul>
+            <li><b>Shovel</b> – אדמה, דשא וחול.</li>
+            <li><b>Pickaxe</b> – אבן, פחם, ברזל, זהב ויהלום.</li>
+            <li><b>Axe</b> – עץ, קרשים ועלים.</li>
+            <li><b>Vacuum</b> – עננים ופריטים רכים מיוחדים.</li>
+          </ul>
+          <p>לחיצה על כלי הופכת אותו לפעיל. שם הכלי הפעיל מוצג בראש המסך. כאשר עוברים עם העכבר על בלוק, חלונית “הבלוק המסומן” מציגה את הכלי הנדרש ואת ה-Tier הדרוש.</p>
+        </article>
+
+        <article id="help-mining">
+          <h2>3. כרייה ושבירת בלוקים</h2>
+          <p>בלוקים אינם בהכרח נשברים מיד. לכל חומר קשיות אחרת. החזק את לחצן העכבר על הבלוק והתקדמות הכרייה תוצג. כלי מתאים ו-Tier גבוה יותר מקצרים את זמן הכרייה.</p>
+          <p>אם הכלי אינו מתאים, המשחק יציג הודעה ולא יכרה את הבלוק. לאחר שבירה ב-Survival הפריט מתווסף למלאי ול-Hotbar, ונצבר XP לשדרוג.</p>
+        </article>
+
+        <article id="help-place">
+          <h2>4. הנחת בלוקים</h2>
+          <p>בחר בלוק מהמלאי או מה-Hotbar. מצב הפעולה יעבור אוטומטית להנחה. לחץ על תא שמים פנוי כדי להניח את הבלוק. ב-Survival הכמות במלאי תרד באחד; ב-Creative הכמות אינה מוגבלת.</p>
+        </article>
+
+        <article id="help-inventory">
+          <h2>5. מלאי ו-Hotbar</h2>
+          <p>ה-Hotbar בתחתית המסך מכיל עד תשעה פריטים לשימוש מהיר. לחץ על תא או השתמש במקשים 1–9. המלאי המלא נפתח בכפתור התרמיל או במקש E. אפשר לבחור ממנו כל חומר זמין.</p>
+          <p>ב-Creative המלאי מציג את כל סוגי הבלוקים. ב-Survival מוצגים הפריטים שאספת או יצרת.</p>
+        </article>
+
+        <article id="help-craft">
+          <h2>6. Crafting</h2>
+          <p>פתח את חלון ה-Crafting בכפתור ארגז הכלים או במקש C. כל מתכון מציג את הדרישות. כפתור היצירה פעיל רק כאשר יש מספיק חומרים, אלא אם אתה ב-Creative.</p>
+          <ul>
+            <li>Wood → Planks</li>
+            <li>Stone + Wood → Crafting Table</li>
+            <li>Sand → Glass</li>
+            <li>Stone + Coal → Iron</li>
+          </ul>
+        </article>
+
+        <article id="help-upgrade">
+          <h2>7. שדרוג כלים</h2>
+          <p>כל פעולת כרייה מוצלחת מוסיפה XP. לאחר 10 פעולות כפתור “שדרג” הופך לזמין. כל שדרוג מעלה Tier, מקצר זמני כרייה ומאפשר כריית חומרים קשים יותר. דרגת הכלי נשמרת יחד עם המשחק.</p>
+        </article>
+
+        <article id="help-modes">
+          <h2>8. Survival לעומת Creative</h2>
+          <p><b>Survival:</b> חייבים כלי נכון, Tier מתאים ומלאי מספיק להנחת בלוקים. כרייה מוסיפה משאבים ו-XP.</p>
+          <p><b>Creative:</b> כל הבלוקים זמינים, אין צריכת מלאי, הכרייה מהירה יותר, ומתאים בעיקר לבנייה חופשית.</p>
+        </article>
+
+        <article id="help-world">
+          <h2>9. עולם, גלילה ו-Seed</h2>
+          <p>העולם גדול מאזור התצוגה וניתן לגלול אופקית ואנכית. הגנרטור משתמש ב-Seed כדי ליצור גובה קרקע, עצים, מערות ומשאבים. אותו Seed ייצור שוב את אותה נקודת פתיחה כל עוד אלגוריתם הגנרציה נשאר זהה.</p>
+          <p>המפה הקטנה בצד מציגה חתך מוקטן של העולם ומתעדכנת לאחר שינויים.</p>
+        </article>
+
+        <article id="help-save">
+          <h2>10. שמירה, המשך ומשחק חדש</h2>
+          <p>המשחק נשמר אוטומטית בדפדפן לאחר שינויים משמעותיים, וגם ניתן ללחוץ על 💾. הכפתור “המשך משחק” במסך הפתיחה טוען את השמירה האחרונה. “משחק חדש” מחליף את העולם הנוכחי לאחר אישור.</p>
+          <p>השמירה נמצאת ב-localStorage של הדפדפן ולכן היא מקומית למחשב ולדפדפן שבהם שיחקת.</p>
+        </article>
+
+        <article id="help-shortcuts">
+          <h2>11. קיצורי מקלדת</h2>
+          <table>
+            <tr><th>מקש</th><th>פעולה</th></tr>
+            <tr><td>1–9</td><td>בחירת תא Hotbar</td></tr>
+            <tr><td>E</td><td>פתיחה/סגירה של המלאי</td></tr>
+            <tr><td>C</td><td>פתיחה/סגירה של Crafting</td></tr>
+            <tr><td>H</td><td>הוראות</td></tr>
+            <tr><td>P / Esc</td><td>Pause / סגירת חלון פתוח</td></tr>
+            <tr><td>Ctrl+Z</td><td>Undo</td></tr>
+            <tr><td>Ctrl+Y</td><td>Redo</td></tr>
+            <tr><td>S</td><td>שמירה ידנית</td></tr>
+          </table>
+        </article>
+
+        <article id="help-troubleshoot">
+          <h2>12. פתרון בעיות</h2>
+          <ul>
+            <li>בלוק לא נשבר? בדוק כלי ו-Tier בחלונית המידע.</li>
+            <li>בלוק לא מונח? ודא שבחרת בלוק ושיש כמות במלאי.</li>
+            <li>אין צליל? פתח הגדרות ובדוק Music ו-SFX; דפדפנים עשויים לחסום אודיו עד ללחיצה הראשונה.</li>
+            <li>המשך משחק אפור? אין שמירה תקינה בדפדפן הנוכחי.</li>
+            <li>העולם נראה חשוך? זה חלק ממחזור היום/לילה; ניתן לבטל בהגדרות.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="inventoryModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-head"><h1>מלאי</h1><button class="modal-close" data-close="inventoryModal">×</button></div>
+      <div id="inventoryGrid" class="modal-body inventory-grid"></div>
+    </section>
+
+    <section id="craftModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-head"><h1>Crafting</h1><button class="modal-close" data-close="craftModal">×</button></div>
+      <div id="craftGrid" class="modal-body craft-grid"></div>
+    </section>
+
+    <section id="settingsModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-head"><h1>הגדרות</h1><button class="modal-close" data-close="settingsModal">×</button></div>
+      <div class="modal-body settings-grid">
+        <label>Music <input id="musicVolume" type="range" min="0" max="100" value="20" /></label>
+        <label>SFX <input id="sfxVolume" type="range" min="0" max="100" value="65" /></label>
+        <label><input id="dayNightToggle" type="checkbox" checked /> מחזור יום/לילה</label>
+        <label><input id="autosaveToggle" type="checkbox" checked /> שמירה אוטומטית</label>
+        <label>גודל בלוק
+          <select id="tileSizeSelect">
+            <option value="28">קטן</option>
+            <option value="34" selected>רגיל</option>
+            <option value="42">גדול</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section id="pauseModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-head"><h1>המשחק מושהה</h1></div>
+      <div class="modal-body pause-actions">
+        <button id="resumeBtn" class="mc-btn primary">המשך</button>
+        <button id="pauseSaveBtn" class="mc-btn">שמור</button>
+        <button id="pauseHelpBtn" class="mc-btn">הוראות</button>
+        <button id="backToMenuBtn" class="mc-btn">חזרה לתפריט הראשי</button>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="./scripts/main.js"></script>
+</body>
 </html>

@@ -1,84 +1,29 @@
-.game-section {
-  height: 100vh;
-}
-
-.game-scene {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  min-width: 1500px;
-  background-color: rgb(2, 18, 2);
-  position: relative;
-}
-
-.game-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1380px;
-  padding: 1rem;
-  padding-right: 5rem;
-}
-
-.row {
-  width: 100%;
-  display: flex;
-}
-.cell {
-  height: 3.5rem;
-  flex: 1;
-}
-.cell:hover {
-  outline: 1px white solid;
-  box-sizing: border-box;
-}
-.cloud {
-  background-color: beige;
-}
-.sky {
-  background-color: cornflowerblue;
-}
-.soil {
-  background: url("/assets/images/soil.png") no-repeat center center/cover;
-}
-.grass {
-  background: url("/assets/images/grass.png") no-repeat center center/cover;
-}
-.wood {
-  background: url("/assets/images/wood.png") no-repeat center center/cover;
-}
-.leaves {
-  background: url("/assets/images/leaves.png") no-repeat center center/cover;
-  background-color: rgb(2, 18, 2);
-}
-.stone {
-  background: url("/assets/images/stone.png") no-repeat center
-    center/cover;
-}
-
-.gold {
-  background: url("/assets/images/goldTexture.png") no-repeat center
-  center/cover;
-}
-.diamond {
-  background: url("/assets/images/diamondTexture.png") no-repeat center
-  center/cover;
-}
-.wooder {
-  background: url("/assets/images/strongWood.webp") no-repeat center
-  center/cover;
-}
-.leaveser {
-  background: url("/assets/images/strongLeaves.webp") no-repeat center
-  center/cover;
-  background-color: rgb(2, 18, 2);
-}
-
-
-
-
+@font-face{font-family:Minecraft;src:url("../assets/fonts/MinecraftTen-VGORe.ttf")}
+:root{--bg:#0b1209;--panel:#16210f;--panel2:#22331a;--text:#f3f6ed;--muted:#bcc8b3;--accent:#6fbf4b;--accent2:#9be46e;--danger:#d85d53;--border:#526448;--tile:34px}
+*{box-sizing:border-box}
+html,body{height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+button,input,select{font:inherit}
+button{color:inherit}
+.hidden{display:none!important}
+.screen{min-height:100vh}
+.start-screen{display:grid;place-items:center;background:linear-gradient(rgba(8,16,6,.55),rgba(8,16,6,.75)),url("../assets/images/minecraft-background.jpg.webp") center/cover no-repeat;padding:24px}
+.start-card{width:min(760px,96vw);background:rgba(14,22,11,.92);border:3px solid #718568;box-shadow:0 18px 70px #000a;padding:28px;border-radius:16px;backdrop-filter:blur(8px)}
+.brand{text-align:center}.brand img{width:min(620px,90%);max-height:170px;object-fit:contain}.brand p{font-size:18px;color:var(--muted);margin-top:8px}
+.start-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0 18px}
+.mc-btn,.icon-btn{border:2px solid #79866d;background:linear-gradient(#52604a,#35412f);box-shadow:inset 0 0 0 2px #20271c,0 4px 0 #11180e;border-radius:6px;cursor:pointer;transition:.15s transform,.15s filter;padding:12px 16px;font-family:Minecraft,Arial,sans-serif;letter-spacing:.4px}
+.mc-btn:hover,.icon-btn:hover{filter:brightness(1.16);transform:translateY(-1px)}.mc-btn:active,.icon-btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #20271c,0 1px 0 #11180e}.mc-btn.primary{background:linear-gradient(#72a857,#4a7d37)}.mc-btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}.mc-btn.compact{padding:8px 10px;width:100%}
+.new-game-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.new-game-options label,.settings-grid label{display:flex;flex-direction:column;gap:7px;color:var(--muted);font-size:14px}.new-game-options input,.new-game-options select,.settings-grid select{background:#0b1209;border:1px solid var(--border);color:var(--text);padding:10px;border-radius:6px}.start-tip{margin-top:16px;text-align:center;color:#d9e5cf}.start-tip kbd,.hotbar-help kbd{background:#111;border:1px solid #666;padding:2px 6px;border-radius:4px}
+.game-screen{height:100vh;display:grid;grid-template-rows:auto 1fr auto;background:#0a0f08}
+.topbar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:8px 12px;background:#15200f;border-bottom:2px solid #35472e;z-index:40}.topbar-group{display:flex;gap:7px}.icon-btn{width:42px;height:38px;padding:0;font-family:Arial}.status-strip{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:13px;color:#cbd8c1}.status-strip strong{color:#fff}
+.workspace{min-height:0;display:grid;grid-template-columns:220px 1fr;direction:ltr}.sidebar{direction:rtl;padding:12px;background:#111b0d;border-right:2px solid #314328;overflow:auto}.sidebar h2{font-family:Minecraft,Arial;font-size:15px;margin:9px 0;color:#dbe8d2}.tools-panel{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tool-card{display:flex;align-items:center;gap:8px;padding:8px;background:#1d2a17;border:2px solid #394b31;border-radius:8px;cursor:pointer}.tool-card.active{border-color:#92e267;box-shadow:0 0 0 2px #315923}.tool-card img{width:38px;height:38px;image-rendering:pixelated}.tool-card span{font-size:12px}
+.upgrade-box,.block-inspector,.mini-wrap{margin-top:14px;background:#182413;border:1px solid #34452c;border-radius:8px;padding:10px}.upgrade-head{display:flex;justify-content:space-between;font-size:12px}.progress{height:11px;background:#090d08;border:1px solid #3c4937;border-radius:999px;overflow:hidden;margin:8px 0}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#4e9f35,#a2ec6f);transition:width .15s}.block-inspector{min-height:110px;font-size:12px;line-height:1.7;color:#ccd7c4}#minimap{width:100%;height:auto;background:#7eb5db;border:1px solid #53644c;image-rendering:pixelated}
+.world-shell{position:relative;min-width:0;min-height:0;background:#6298c5;overflow:hidden}.world-viewport{position:absolute;inset:0;overflow:auto;outline:none;scrollbar-color:#61745a #172112;scrollbar-width:thin}.world{display:grid;grid-template-columns:repeat(var(--world-w),var(--tile));grid-auto-rows:var(--tile);width:max-content;min-height:100%;position:relative;direction:ltr}.cell{width:var(--tile);height:var(--tile);border:1px solid rgba(0,0,0,.06);background-size:cover;background-position:center;image-rendering:pixelated;cursor:crosshair;position:relative}.cell:hover{outline:2px solid rgba(255,255,255,.85);z-index:2}.cell.mining::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 7px,#fff8 7px 9px);mix-blend-mode:overlay}
+.day-overlay{pointer-events:none;position:absolute;inset:0;z-index:8;background:#06102c;opacity:0;transition:opacity 1s}.mining-hud{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:20;width:min(360px,70%);background:#111c;padding:10px 14px;border:1px solid #718067;border-radius:8px;text-align:center}.mining-hud .progress{margin:6px 0 0}.toast{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:30;background:#10180de8;border:1px solid #6f8662;border-radius:7px;padding:10px 14px;box-shadow:0 5px 25px #0008}
+.hotbar-shell{background:#111a0e;border-top:2px solid #34462c;padding:8px 12px}.hotbar{display:flex;justify-content:center;gap:5px;direction:ltr}.hotbar-slot,.inventory-slot{position:relative;width:58px;height:58px;background:#1c2817;border:2px solid #69765f;display:grid;place-items:center;border-radius:5px;cursor:pointer}.hotbar-slot.active,.inventory-slot.active{border:3px solid #f3f2d1;box-shadow:0 0 0 2px #7fb95d}.hotbar-slot .block-icon,.inventory-slot .block-icon{width:42px;height:42px}.slot-count{position:absolute;right:3px;bottom:1px;font-size:12px;background:#000b;padding:1px 4px;border-radius:4px}.slot-key{position:absolute;left:3px;top:2px;font-size:10px;color:#ccd5c5}.hotbar-help{text-align:center;color:#98a790;font-size:11px;margin-top:6px}
+.modal-backdrop{position:fixed;inset:0;background:#000b;z-index:90}.modal{position:fixed;z-index:100;top:50%;left:50%;transform:translate(-50%,-50%);width:min(720px,94vw);max-height:88vh;background:#182313;border:2px solid #6d8063;border-radius:10px;box-shadow:0 24px 80px #000;overflow:hidden}.modal.large{width:min(1000px,96vw)}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#22311b;border-bottom:1px solid #485b3f}.modal-head h1{font-family:Minecraft,Arial;font-size:20px}.modal-close{background:transparent;border:0;color:white;font-size:28px;cursor:pointer}.modal-body{padding:16px;overflow:auto;max-height:calc(88vh - 58px)}
+.help-content{line-height:1.75}.help-content article{background:#111a0e;border:1px solid #34452d;padding:14px;margin:12px 0;border-radius:8px}.help-content h2{color:#a7eb7b;font-size:18px;margin-bottom:7px}.help-content ul{padding-right:22px}.help-content li{margin:4px 0}.help-nav{position:sticky;top:-16px;z-index:2;display:flex;gap:6px;flex-wrap:wrap;background:#182313;padding:10px 0;border-bottom:1px solid #35472d}.help-nav a{color:#cbe9b7;text-decoration:none;background:#273820;padding:5px 8px;border-radius:5px;font-size:12px}.help-content table{width:100%;border-collapse:collapse}.help-content th,.help-content td{border:1px solid #42513b;padding:8px;text-align:right}
+.inventory-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}.inventory-slot{width:100%;height:76px}.craft-grid{display:grid;gap:10px}.recipe{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;background:#111a0e;border:1px solid #35472e;border-radius:8px;padding:12px}.recipe h3{color:#bde79e;margin-bottom:4px}.recipe small{color:#aebba7}.settings-grid{display:grid;gap:18px}.settings-grid label:has(input[type=checkbox]){flex-direction:row;align-items:center}.pause-actions{display:grid;gap:10px}
+.block-icon{background:#777;border:1px solid #0004}.block-soil{background:url("../assets/images/soil.png") center/cover}.block-grass{background:url("../assets/images/grass.png") center/cover}.block-wood{background:url("../assets/images/wood.png") center/cover}.block-leaves{background:url("../assets/images/leaves.png") center/cover}.block-stone{background:url("../assets/images/stone.png") center/cover}.block-gold{background:url("../assets/images/goldTexture.png") center/cover}.block-diamond{background:url("../assets/images/diamondTexture.png") center/cover}.block-sky{background:#6aa3d5}.block-cloud{background:#eee}.block-sand{background:repeating-linear-gradient(45deg,#d8c276 0 4px,#cdb567 4px 8px)}.block-water{background:linear-gradient(135deg,#3f80ce,#68b6e9 55%,#2e6eb6)}.block-coal{background:radial-gradient(circle at 30% 35%,#1e1e1e 0 18%,transparent 19%),#777}.block-iron{background:radial-gradient(circle at 65% 35%,#c8b6a3 0 16%,transparent 17%),#737373}.block-planks{background:repeating-linear-gradient(0deg,#a66e39 0 7px,#7c4f2a 7px 9px)}.block-glass{background:linear-gradient(135deg,#d9f7ff77,#fff4 48%,#b9e8f466);border-color:#d9f7ff77}.block-bedrock{background:linear-gradient(45deg,#222 25%,#4a4a4a 25% 50%,#303030 50% 75%,#555 75%)}.block-crafting{background:url("../assets/images/craftingTableBlock.png") center/cover}.block-wooder{background:url("../assets/images/strongWood.webp") center/cover}.block-leaveser{background:url("../assets/images/strongLeaves.webp") center/cover}
+.cell[data-type="soil"]{background:url("../assets/images/soil.png") center/cover}.cell[data-type="grass"]{background:url("../assets/images/grass.png") center/cover}.cell[data-type="wood"]{background:url("../assets/images/wood.png") center/cover}.cell[data-type="leaves"]{background:url("../assets/images/leaves.png") center/cover}.cell[data-type="stone"]{background:url("../assets/images/stone.png") center/cover}.cell[data-type="gold"]{background:url("../assets/images/goldTexture.png") center/cover}.cell[data-type="diamond"]{background:url("../assets/images/diamondTexture.png") center/cover}.cell[data-type="cloud"]{background:#eee}.cell[data-type="sky"]{background:#6aa3d5}.cell[data-type="sand"]{background:repeating-linear-gradient(45deg,#d8c276 0 4px,#cdb567 4px 8px)}.cell[data-type="water"]{background:linear-gradient(135deg,#3f80ce,#68b6e9 55%,#2e6eb6)}.cell[data-type="coal"]{background:radial-gradient(circle at 30% 35%,#1e1e1e 0 18%,transparent 19%),#777}.cell[data-type="iron"]{background:radial-gradient(circle at 65% 35%,#c8b6a3 0 16%,transparent 17%),#737373}.cell[data-type="planks"]{background:repeating-linear-gradient(0deg,#a66e39 0 7px,#7c4f2a 7px 9px)}.cell[data-type="glass"]{background:linear-gradient(135deg,#d9f7ff77,#fff4 48%,#b9e8f466);border-color:#d9f7ff77}.cell[data-type="bedrock"]{background:linear-gradient(45deg,#222 25%,#4a4a4a 25% 50%,#303030 50% 75%,#555 75%)}.cell[data-type="crafting"]{background:url("../assets/images/craftingTableBlock.png") center/cover}.cell[data-type="wooder"]{background:url("../assets/images/strongWood.webp") center/cover}.cell[data-type="leaveser"]{background:url("../assets/images/strongLeaves.webp") center/cover}
+@media(max-width:900px){.workspace{grid-template-columns:160px 1fr}.sidebar{padding:8px}.tools-panel{grid-template-columns:1fr}.status-strip{gap:7px;font-size:11px}.hotbar-slot{width:46px;height:46px}.hotbar-slot .block-icon{width:34px;height:34px}.topbar{grid-template-columns:auto 1fr auto}.icon-btn{width:36px}.brand img{max-height:110px}}
+@media(max-width:650px){.workspace{grid-template-columns:1fr}.sidebar{display:none}.status-strip span:nth-child(n+4){display:none}.start-actions,.new-game-options{grid-template-columns:1fr}.hotbar-help{display:none}}

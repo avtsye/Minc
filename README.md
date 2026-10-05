@@ -1,58 +1,62 @@
-# 🐱‍👤 MineCraft
-I was given a task @AppleSeeds Bootcamp to make a small MineCraft game while only using ```JavaScript```, ```HTML``` & ```CSS``` 
+# Mincraft 2D Enhanced
 
-The basic task was to make a game with the specifications given in writing and a video.
+גרסה משודרגת של הפרויקט המקורי **Mincraft-Game**, המבוססת על HTML, CSS ו-JavaScript ללא שרת.
 
-<br />
+## הפעלה
 
-### My design was simple and I made sure to include:
+פתחו ישירות:
 
+https://raw.githack.com/avtsye/Minc/main/index.html
 
-#### Small tutorial
-A landing page with a start button and insturctions
-
-#### All basic rules set in place
-The player can pick up Tiles by using the tools and place them back to the world
-
-
-#### Styling same close to origin
-I was trying to make the basic game look almost the same as the original game from the specs
-
-<a href="gameSpecs.pdf" target="_blank">Instructions-PDF</a>
-
-<br>
-
-#### Features
-I decided to add some extra stuff for fun like upgrading weapons and giving tier to the tiles
-
-#### App responsiveness
-I made sure that the app is useable for smaller screens as well in landscape mode.
-
-<br />
-
-
-## Demo site link
-
-https://elad-minecraft2d.netlify.app/
-
-
-<br />
-
-
-## Screenshots
-
-![Alt text](./assets/screenshots/Screenshot1.png?raw=true "Title") 
-
-![plot](./assets/screenshots/Screenshot2.png) 
-
-![plot](./assets/screenshots/Screenshot3.png) 
-
-
-## Deployment
-
-To deploy this project run
+או מקומית:
 
 ```bash
-  ./index.html
+python -m http.server 8000
 ```
-This is a basic site with only one page of ```HTML``` , ```JavaScript``` and ```CSS``` styling
+
+ואז:
+
+```
+http://localhost:8000
+```
+
+## מה נוסף
+
+- נתיבים יחסיים שמתאימים ל-RawGitHack
+- שמירה אוטומטית ו-Continue Game באמצעות localStorage
+- Reset/State מסודר ללא אתחול כפול
+- עולם גדול וגלילה
+- יצירת עולם לפי Seed
+- Survival ו-Creative
+- כרייה מדורגת עם זמן שבירה
+- Tool tiers ו-XP
+- Hotbar ומקשי 1–9
+- Inventory מלא
+- Crafting
+- Undo / Redo
+- Pause menu
+- Settings: מוזיקה, אפקטים, יום/לילה, autosave וגודל בלוקים
+- מחזור יום/לילה
+- Minimap
+- מידע על בלוק מתחת לעכבר
+- בלוקים חדשים: Sand, Water, Coal, Iron, Planks, Glass, Bedrock, Crafting Table
+- חלונית הוראות מפורטת בעברית עם קיצורי מקלדת ופתרון תקלות
+- עיצוב Responsive משופר
+
+## מקשים
+
+| מקש | פעולה |
+|---|---|
+| 1–9 | בחירת Hotbar |
+| E | מלאי |
+| C | Crafting |
+| H | הוראות |
+| P / Esc | Pause |
+| Ctrl+Z | Undo |
+| Ctrl+Y | Redo |
+| S | שמירה |
+
+## קרדיט
+
+הפרויקט מבוסס על המאגר המקורי:
+https://github.com/eladjmc/Mincraft-Game
