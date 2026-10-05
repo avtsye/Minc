@@ -344,35 +344,63 @@ function cancelMining(){
   mining=null;els.miningHud.classList.add("hidden");els.miningProgress.style.width="0";
 }
 function finishMine(i){
-  const old=state.world[i];cancelMining();
-  pushUndo({kind:"cell",i,before:old,after:"sky"});
+  const old=state.world[i];
+  const beforeInventory={...state.inventory};
+  const beforeXp=state.xp;
+  cancelMining();
   state.world[i]="sky";updateCell(i);
   if(state.mode!=="creative"){
     state.inventory[old]=(state.inventory[old]||0)+1;
     state.xp=Math.min(UPGRADE_ACTIONS,state.xp+1);
+    if(!state.hotbar.includes(old)){
+      const empty=state.hotbar.findIndex(x=>!x);
+      if(empty>=0) state.hotbar[empty]=old;
+    }
   }
+  pushUndo({
+    kind:"cell",i,before:old,after:"sky",
+    beforeInventory,afterInventory:{...state.inventory},
+    beforeXp,afterXp:state.xp
+  });
   play(hitSound,.15);renderHUD();renderInventory();renderHotbar();renderCrafting();drawMinimap();autosave();
 }
 function placeBlock(i){
   const type=state.activeBlock;
   if(!type||state.world[i]!=="sky")return;
   if(state.mode!=="creative"&&(state.inventory[type]||0)<=0){toast("אין מספיק "+BLOCKS[type].name);return;}
-  pushUndo({kind:"cell",i,before:"sky",after:type});
-  state.world[i]=type;if(state.mode!=="creative")state.inventory[type]--;
+  const beforeInventory={...state.inventory};
+  const beforeXp=state.xp;
+  state.world[i]=type;
+  if(state.mode!=="creative")state.inventory[type]--;
+  pushUndo({
+    kind:"cell",i,before:"sky",after:type,
+    beforeInventory,afterInventory:{...state.inventory},
+    beforeXp,afterXp:state.xp
+  });
   updateCell(i);play(hitSound,.12);
   if(state.mode!=="creative"&&state.inventory[type]<=0) state.activeBlock=null;
   renderInventory();renderHotbar();renderCrafting();renderHUD();drawMinimap();autosave();
 }
 function pushUndo(action){undoStack.push(action);if(undoStack.length>100)undoStack.shift();redoStack=[];}
 function undo(){
-  const a=undoStack.pop();if(!a)return;
-  if(a.kind==="cell"){state.world[a.i]=a.before;updateCell(a.i);}
-  redoStack.push(a);drawMinimap();autosave();toast("Undo");
+  const a=undoStack.pop();if(!a||!state)return;
+  if(a.kind==="cell"){
+    state.world[a.i]=a.before;updateCell(a.i);
+    if(a.beforeInventory) state.inventory={...a.beforeInventory};
+    if(Number.isFinite(a.beforeXp)) state.xp=a.beforeXp;
+  }
+  redoStack.push(a);
+  renderHUD();renderInventory();renderHotbar();renderCrafting();drawMinimap();autosave();toast("Undo");
 }
 function redo(){
-  const a=redoStack.pop();if(!a)return;
-  if(a.kind==="cell"){state.world[a.i]=a.after;updateCell(a.i);}
-  undoStack.push(a);drawMinimap();autosave();toast("Redo");
+  const a=redoStack.pop();if(!a||!state)return;
+  if(a.kind==="cell"){
+    state.world[a.i]=a.after;updateCell(a.i);
+    if(a.afterInventory) state.inventory={...a.afterInventory};
+    if(Number.isFinite(a.afterXp)) state.xp=a.afterXp;
+  }
+  undoStack.push(a);
+  renderHUD();renderInventory();renderHotbar();renderCrafting();drawMinimap();autosave();toast("Redo");
 }
 
 function upgrade(){
@@ -393,7 +421,7 @@ function startDayCycle(){
   applyDay();
 }
 function applyDay(){
-  if(!settings.dayNight){els.dayOverlay.style.opacity=0;return;}
+  if(!settings.dayNight || !state){els.dayOverlay.style.opacity=0;return;}
   const night=(Math.cos(state.dayPhase*Math.PI*2)+1)/2;
   els.dayOverlay.style.opacity=(night*.48).toFixed(2);
 }
