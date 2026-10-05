@@ -18,25 +18,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clone upstream
-        run: |
-          git clone --depth=1 https://github.com/eladjmc/Mincraft-Game.git /tmp/upstream
+        run: git clone --depth=1 https://github.com/eladjmc/Mincraft-Game.git /tmp/upstream
 
       - name: Copy upstream contents
         run: |
-          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .github -exec rm -rf {} +
-          cp -a /tmp/upstream/. .
-          rm -rf .git
-          # restore target repository git metadata
-          git init
-          git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
-          git fetch origin main
-          git checkout -B main origin/main
-          # overwrite working tree from upstream again, while keeping this importer until commit
-          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .github -exec rm -rf {} +
-          cp -a /tmp/upstream/. .
-          rm -rf .git
-          mkdir -p .github/workflows
-          cp "${GITHUB_WORKSPACE}/.github/workflows/import-upstream.yml" .github/workflows/import-upstream.yml 2>/dev/null || true
+          rsync -a --delete \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            /tmp/upstream/ ./
 
       - name: Commit imported repository
         run: |
