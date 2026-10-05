@@ -1,36 +1,42 @@
 name: Validate game
-
 on:
   push:
     branches: [main]
     paths:
       - "index.html"
+      - "manifest.json"
+      - "sw.js"
       - "css/**"
       - "scripts/**"
       - ".github/workflows/validate.yml"
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Check JavaScript syntax
-        run: node --check scripts/main.js
+        run: |
+          node --check scripts/main.js
+          node --check scripts/app/data.js
+          node --check scripts/app/storage.js
+          node --check scripts/app/world.js
+          node --check scripts/app/player.js
+          node --check sw.js
       - name: Verify active paths are relative
         run: |
-          if grep -R -nE '["'"'"'(]/(assets|scripts|css)/' index.html css/style.css scripts/main.js; then
+          if grep -R -nE '["'"'"'(]/(assets|scripts|css)/' index.html css/style.css scripts/main.js scripts/app sw.js; then
             echo "Found absolute asset path"
             exit 1
           fi
       - name: Smoke-test static site
         run: |
           python3 -m http.server 8000 >/tmp/minc-http.log 2>&1 &
-          SERVER_PID=$!
-          trap 'kill $SERVER_PID' EXIT
+          PID=$!
+          trap 'kill $PID' EXIT
           sleep 1
           curl --fail --silent http://127.0.0.1:8000/index.html | grep -q "Mincraft 2D Enhanced"
-          curl --fail --silent http://127.0.0.1:8000/scripts/main.js | grep -q "STORAGE_KEY"
+          curl --fail --silent http://127.0.0.1:8000/manifest.json | grep -q "Mincraft 2D Enhanced"
+          curl --fail --silent http://127.0.0.1:8000/scripts/app/player.js | grep -q "class Player"
