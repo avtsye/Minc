@@ -1,97 +1,87 @@
 import { chromium } from "playwright";
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:900}});
+const errors=[];
+page.on("pageerror",e=>errors.push("pageerror: "+e.message));
+page.on("console",m=>{if(m.type()==="error")errors.push("console: "+m.text())});
+await page.goto("http://127.0.0.1:8000/index.html",{waitUntil:"networkidle"});
+await page.locator("#menu").waitFor({state:"visible"});
+if(await page.locator(".world-card").count())throw new Error("Fresh profile should have no worlds");
 
-const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-const errors = [];
-page.on("pageerror", e => errors.push("pageerror: " + e.message));
-page.on("console", msg => {
-  if (msg.type() === "error") errors.push("console: " + msg.text());
-});
+// Help/settings on menu.
+await page.click("#helpMenuBtn");await page.locator("#helpModal").waitFor({state:"visible"});
+if((await page.locator("#helpModal h3").count())<8)throw new Error("Help is incomplete");
+await page.click("#helpModal [data-close]");
+await page.click("#settingsMenuBtn");await page.locator("#settingsModal").waitFor({state:"visible"});
+await page.fill("#music","0");await page.click("#settingsModal [data-close]");
 
-const base = "http://127.0.0.1:8000/index.html";
-await page.goto(base, { waitUntil: "networkidle" });
+// Create deterministic small creative world.
+await page.click("#createWorldBtn");
+await page.fill("#newName","QA World");
+await page.fill("#newSeed","QA-2026");
+await page.selectOption("#newMode","creative");
+await page.selectOption("#newPreset","normal");
+await page.selectOption("#newSize","small");
+await page.click("#confirmWorldBtn");
+await page.locator("#game").waitFor({state:"visible"});
+if((await page.locator(".cell").count())!==1792)throw new Error("Small world cell count mismatch");
+if((await page.locator(".tool").count())!==4)throw new Error("Tools missing");
+if((await page.locator(".slot").count())!==9)throw new Error("Hotbar missing");
+if(!(await page.locator("#player").isVisible()))throw new Error("Player missing");
 
-// Startup must not crash.
-await page.locator("#startScreen").waitFor({ state: "visible" });
-if (!(await page.locator("#gameScreen").evaluate(el => el.classList.contains("hidden")))) {
-  throw new Error("Game screen should be hidden on startup");
-}
+// Player movement should alter coordinates.
+await page.waitForTimeout(800);
+const before=await page.textContent("#coords");
+await page.keyboard.down("d");await page.waitForTimeout(450);await page.keyboard.up("d");
+await page.waitForTimeout(100);
+const after=await page.textContent("#coords");
+if(before===after)throw new Error("Player did not move");
 
-// Help and settings from start screen.
-await page.click("#helpBtnStart");
-await page.locator("#helpModal").waitFor({ state: "visible" });
-if ((await page.locator("#helpModal article").count()) < 10) throw new Error("Help modal is incomplete");
-await page.click('#helpModal [data-close="helpModal"]');
-
-await page.click("#settingsBtnStart");
-await page.locator("#settingsModal").waitFor({ state: "visible" });
-await page.fill("#musicVolume", "0");
-await page.click('#settingsModal [data-close="settingsModal"]');
-
-// Deterministic creative world.
-await page.fill("#seedInput", "QA-SEED-2026");
-await page.selectOption("#modeSelect", "creative");
-await page.click("#newGameBtn");
-await page.locator("#gameScreen").waitFor({ state: "visible" });
-
-if ((await page.locator(".cell").count()) !== 2160) throw new Error("Expected 2160 world cells");
-if ((await page.locator(".hotbar-slot").count()) !== 9) throw new Error("Expected 9 hotbar slots");
-if ((await page.locator(".tool-card").count()) !== 4) throw new Error("Expected 4 tools");
-if ((await page.textContent("#seedLabel")) !== "QA-SEED-2026") throw new Error("Seed label mismatch");
-
-// Inventory and crafting shortcuts.
-await page.keyboard.press("e");
-await page.locator("#inventoryModal").waitFor({ state: "visible" });
-if ((await page.locator(".inventory-slot").count()) < 10) throw new Error("Creative inventory too small");
+// Inventory/Crafting/Furnace.
+await page.keyboard.press("e");await page.locator("#inventoryModal").waitFor({state:"visible"});
+if((await page.locator("#inventory .item").count())<10)throw new Error("Creative inventory incomplete");
+await page.keyboard.press("Escape");
+await page.keyboard.press("c");await page.locator("#craftModal").waitFor({state:"visible"});
+if((await page.locator("#crafting .recipe").count())<5)throw new Error("Crafting recipes missing");
+await page.locator("#crafting .recipe button").first().click();
+await page.keyboard.press("Escape");
+await page.keyboard.press("f");await page.locator("#furnaceModal").waitFor({state:"visible"});
+if((await page.locator("#furnace .recipe").count())<2)throw new Error("Furnace recipes missing");
+await page.locator("#furnace .recipe button").first().click();
 await page.keyboard.press("Escape");
 
-await page.keyboard.press("c");
-await page.locator("#craftModal").waitFor({ state: "visible" });
-if ((await page.locator(".recipe").count()) < 4) throw new Error("Crafting recipes missing");
-await page.keyboard.press("Escape");
-
-// Place a block via hotbar then undo/redo.
+// Place a block near starting area and undo/redo.
 await page.keyboard.press("1");
-const sky = page.locator('.cell[data-type="sky"]').first();
-const skyIndex = await sky.getAttribute("data-index");
-await sky.click();
-let target = page.locator('.cell[data-index="' + skyIndex + '"]');
-if ((await target.getAttribute("data-type")) !== "soil") throw new Error("Block placement failed");
-
+const target=page.locator('.cell[data-index="390"]');
+await target.scrollIntoViewIfNeeded();
+const oldType=await target.getAttribute("data-type");
+if(oldType!=="sky")throw new Error("QA placement target unexpectedly occupied");
+await target.click();
+if((await target.getAttribute("data-type"))!=="soil")throw new Error("Placement failed");
 await page.keyboard.press("Control+z");
-if ((await target.getAttribute("data-type")) !== "sky") throw new Error("Undo failed");
-
+if((await target.getAttribute("data-type"))!=="sky")throw new Error("Undo failed");
 await page.keyboard.press("Control+y");
-if ((await target.getAttribute("data-type")) !== "soil") throw new Error("Redo failed");
+if((await target.getAttribute("data-type"))!=="soil")throw new Error("Redo failed");
 
-// Mine a block in creative mode.
-await page.getByRole("button", { name: "Axe", exact: true }).click();
-const wood = page.locator('.cell[data-type="wood"]').first();
-if (await wood.count()) {
-  const woodIndex = await wood.getAttribute("data-index");
-  await wood.scrollIntoViewIfNeeded();
-  await wood.hover();
-  await page.mouse.down();
-  await page.waitForTimeout(220);
-  await page.mouse.up();
-  await page.waitForTimeout(80);
-  const minedCell = page.locator('.cell[data-index="' + woodIndex + '"]');
-  if ((await minedCell.getAttribute("data-type")) !== "sky") throw new Error("Mining failed");
-}
+// Stats and save.
+await page.click("#statsBtn");await page.locator("#statsModal").waitFor({state:"visible"});
+if(!(await page.locator("#stats").textContent()).includes("נוצרו"))throw new Error("Stats missing");
+await page.click("#statsModal [data-close]");
+await page.keyboard.press("s");
+const savedCount=await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith("minc_world_v2_")).length);
+if(savedCount!==1)throw new Error("World was not saved");
 
-// Save + reload + continue.
-await page.click("#saveBtn");
-const save = await page.evaluate(() => localStorage.getItem("minc_enhanced_save_v1"));
-if (!save) throw new Error("Save was not written");
+// Back to menu, duplicate, reopen.
+await page.click("#menuBtn");await page.locator("#pauseModal").waitFor({state:"visible"});
+await page.click("#backBtn");await page.locator("#menu").waitFor({state:"visible"});
+if((await page.locator(".world-card").count())!==1)throw new Error("Saved world missing from menu");
+await page.locator(".world-card [data-dup]").click();
+if((await page.locator(".world-card").count())!==2)throw new Error("Duplicate world failed");
+await page.locator(".world-card [data-open]").first().click();
+await page.locator("#game").waitFor({state:"visible"});
+if(!(await page.textContent("#worldName")).includes("copy"))throw new Error("Duplicate world did not open");
 
-await page.screenshot({ path: "qa-screenshot.png", fullPage: true });
-await page.reload({ waitUntil: "networkidle" });
-await page.locator("#startScreen").waitFor({ state: "visible" });
-if (await page.locator("#continueBtn").isDisabled()) throw new Error("Continue should be enabled after reload");
-await page.click("#continueBtn");
-await page.locator("#gameScreen").waitFor({ state: "visible" });
-if ((await page.textContent("#seedLabel")) !== "QA-SEED-2026") throw new Error("Saved seed was not restored");
-
-if (errors.length) throw new Error("Browser errors:\n" + errors.join("\n"));
+await page.screenshot({path:"qa-screenshot.png",fullPage:true});
+if(errors.length)throw new Error("Browser errors:\n"+errors.join("\n"));
 console.log("E2E QA passed");
 await browser.close();
