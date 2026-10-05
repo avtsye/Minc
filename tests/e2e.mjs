@@ -31,10 +31,10 @@ if(!(await page.locator("#player").isVisible()))throw new Error("Player missing"
 
 // Player movement should alter coordinates.
 await page.waitForTimeout(800);
-const before=await page.textContent("#coords");
-await page.keyboard.down("d");await page.waitForTimeout(450);await page.keyboard.up("d");
+const before=await page.locator("#player").getAttribute("style");
+await page.keyboard.down("d");await page.waitForTimeout(550);await page.keyboard.up("d");
 await page.waitForTimeout(100);
-const after=await page.textContent("#coords");
+const after=await page.locator("#player").getAttribute("style");
 if(before===after)throw new Error("Player did not move");
 
 // Inventory/Crafting/Furnace.
