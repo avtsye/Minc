@@ -1,0 +1,43 @@
+name: Browser QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "css/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/browser-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps chromium
+      - name: Start static server
+        run: |
+          python3 -m http.server 8000 > /tmp/minc-http.log 2>&1 &
+          echo $! > /tmp/minc-http.pid
+      - name: Run browser QA
+        run: node tests/e2e.mjs
+      - name: Upload QA screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-qa-screenshot
+          path: qa-screenshot.png
+          if-no-files-found: ignore
