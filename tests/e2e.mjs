@@ -52,11 +52,22 @@ await page.keyboard.press("Escape");
 
 // Place a block near starting area and undo/redo.
 await page.keyboard.press("1");
-const target=page.locator('.cell[data-type="sky"]').first();
-const targetIndex=await target.getAttribute("data-index");
-await target.scrollIntoViewIfNeeded();
-await target.click();
+const coordsText=await page.textContent("#coords");
+const m=coordsText.match(/X\s+(\d+)\s+Y\s+(\d+)/);
+if(!m)throw new Error("Could not read player coordinates");
+const px=+m[1],py=+m[2];
+let targetIndex=null;
+for(let dy=-3;dy<=1&&targetIndex===null;dy++){
+  for(let dx=-2;dx<=2;dx++){
+    const x=px+dx,y=py+dy;
+    if(x<0||y<0||x>=64||y>=28)continue;
+    const i=y*64+x;
+    if((await page.locator('.cell[data-index="' + i + '"]').getAttribute("data-type"))==="sky"){targetIndex=String(i);break;}
+  }
+}
+if(targetIndex===null)throw new Error("No nearby sky cell found");
 const stableTarget=page.locator('.cell[data-index="' + targetIndex + '"]');
+await stableTarget.click();
 if((await stableTarget.getAttribute("data-type"))!=="soil")throw new Error("Placement failed");
 await page.keyboard.press("Control+z");
 if((await stableTarget.getAttribute("data-type"))!=="sky")throw new Error("Undo failed");
