@@ -1,0 +1,23 @@
+import T from "./tiles-models.js";
+export const STARTING_TEMPLATE = new Map([
+    [0,[T.sky]],
+    [1,[T.sky]],
+    [2,[T.sky]],
+    [3,[T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.cloud,T.cloud,T.cloud]],
+    [4,[T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.cloud,T.cloud,T.cloud,T.cloud,T.cloud,T.cloud,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.leaveser,T.leaveser,T.leaveser,T.sky]],
+    [5,[T.sky,T.sky,T.leaves,T.leaves,T.leaves,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.cloud,T.cloud,T.cloud,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.leaveser,T.leaveser,T.leaveser]],
+    [6,[T.sky,T.sky,T.leaves,T.leaves,T.leaves,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.leaveser,T.leaveser,T.leaveser]],
+    [7,[T.sky,T.sky,T.leaves,T.leaves,T.leaves,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.leaveser,T.leaveser,T.leaveser,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.stone,T.stone]],
+    [8,[T.sky,T.sky,T.sky,T.wood,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.wooder,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.stone,T.stone,T.stone]],
+    [9,[T.sky,T.sky,T.sky,T.wood,T.sky,T.sky,T.sky,T.sky,T.sky,T.stone,T.stone,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.wooder,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.stone,T.stone,T.stone,T.gold]],
+    [10,[T.sky,T.sky,T.sky,T.wood,T.sky,T.sky,T.sky,T.sky,T.sky,T.stone,T.stone,T.stone,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.wooder,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.sky,T.stone,T.stone,T.stone,T.diamond,T.diamond]],
+    [11,[T.grass]],
+    [12,[T.soil]],
+    [13,[T.soil]],
+    [14,[T.soil]],
+    [15,[T.soil]],
+    [16,[T.soil]],
+    [17,[T.soil]],
+    [18,[T.gold]],
+    [19,[T.diamond]],
+])

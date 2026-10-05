@@ -1,0 +1,84 @@
+.game-section {
+  height: 100vh;
+}
+
+.game-scene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  min-width: 1500px;
+  background-color: rgb(2, 18, 2);
+  position: relative;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1380px;
+  padding: 1rem;
+  padding-right: 5rem;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+}
+.cell {
+  height: 3.5rem;
+  flex: 1;
+}
+.cell:hover {
+  outline: 1px white solid;
+  box-sizing: border-box;
+}
+.cloud {
+  background-color: beige;
+}
+.sky {
+  background-color: cornflowerblue;
+}
+.soil {
+  background: url("/assets/images/soil.png") no-repeat center center/cover;
+}
+.grass {
+  background: url("/assets/images/grass.png") no-repeat center center/cover;
+}
+.wood {
+  background: url("/assets/images/wood.png") no-repeat center center/cover;
+}
+.leaves {
+  background: url("/assets/images/leaves.png") no-repeat center center/cover;
+  background-color: rgb(2, 18, 2);
+}
+.stone {
+  background: url("/assets/images/stone.png") no-repeat center
+    center/cover;
+}
+
+.gold {
+  background: url("/assets/images/goldTexture.png") no-repeat center
+  center/cover;
+}
+.diamond {
+  background: url("/assets/images/diamondTexture.png") no-repeat center
+  center/cover;
+}
+.wooder {
+  background: url("/assets/images/strongWood.webp") no-repeat center
+  center/cover;
+}
+.leaveser {
+  background: url("/assets/images/strongLeaves.webp") no-repeat center
+  center/cover;
+  background-color: rgb(2, 18, 2);
+}
+
+
+
+
